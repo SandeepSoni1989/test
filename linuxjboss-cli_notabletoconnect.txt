@@ -1,0 +1,64 @@
+
+1.Receiving "WFLYPRT0053: Could not connect to remote+http://localhost:<PORT>" error when connecting to JBoss CLI in EAP 7.
+Solution Verified - Updated April 18 2019 at 3:13 PM - English
+Environment
+
+    Red Hat JBoss Enterprise Application Platform (EAP)
+        7.0.x
+        7.1.x
+
+Issue
+
+    Getting following error when trying to connect JBoss CLI over SSL in EAP 7 using command jboss-cli.bat --user="admin" --password="admin" --controller=localhost:<PORT> --connect
+    Raw
+
+    Failed to connect to the controller: The controller is not available at localhost:<PORT>: java.net.ConnectException: WFLYPRT0053: Could not connect to remote+http://localhost:<PORT>. The connection failed: WFLYPRT0053: Could not connect to remote+http://localhost:<PORT>. The connection failed: XNIO000812: Connection closed unexpectedly
+
+    Getting following error when trying to connect JBoss CLI in EAP 7 using command jboss-cli.sh --controller=localhost:<PORT> --connect
+    Raw
+
+    Failed to connect to the controller: The controller is not available at localhost:<PORT>: java.net.ConnectException: WFLYPRT0053: Could not connect to remote+http://localhost:<PORT>. The connection failed: WFLYPRT0053: Could not connect to remote+http://localhost:<PORT>. The connection failed: Connection refused
+
+Resolution
+
+    Use command "jboss-cli.bat --user="admin" --password="admin" --controller=remote+https://localhost:<PORT> --connect" to connect.
+
+    Or to make "remote+https" the default protocol, add line <default-protocol use-legacy-override="true">remote+https</default-protocol>" in used jboss-cli.xml as follows:
+    Raw
+
+    <jboss-cli xmlns="urn:jboss:cli:3.1">
+        <default-protocol use-legacy-override="true">remote+https</default-protocol>
+        <!-- The default controller to connect to when 'connect' command is executed w/o arguments -->
+        <default-controller>
+            <protocol>remote+https</protocol>
+            <host>localhost</host>
+            <port>PORT</port>
+        </default-controller>
+
+    If you are facing a second issue with jboss-cli.sh then Remove or comment out the "remote+https" the default protocol in used jboss-cli.xml as follows:
+    Raw
+
+    <!--  Example controller alias named 'Test'  
+        <controllers>
+            <controller name="Test">
+                <host>localhost</host>
+                <port>PORT</port>
+            </controller>
+        </controllers>
+        -->  
+
+Root Cause
+
+    The default protocol remote+http is missing from jboss-cli.
+
+    The duplicate protocol is configured with alias is as given.
+    Raw
+
+     <controllers>
+            <controller name="Test">
+                <protocol>remote+http</protocol>
+                <host>localhost</host>
+                <port>PORT</port>
+            </controller>
+        </controllers>
+

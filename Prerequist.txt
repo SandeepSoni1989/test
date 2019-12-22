@@ -1,0 +1,27 @@
+PREREQUIST
+
+1.EAP 7.1
+ prerequist
+ install java i.e jdk1.8 and jre1.8  & configure path
+ linux
+   export PATH=$JAVA_HOME/bin:$PATH
+or JAVA_HOME=/opt/jdk1.6.0_24
+   PATH=$JAVA_HOME/bin:$PATH:$HOME/bin
+   export PATH JAVA_HOME
+or
+expot CLASSPATH=$CLASSPATH:"path"
+256 mb RAM
+500 mb Free Space
+
+2.APACHE 2.2
+  prerequist
+  httpd
+3.TOMCAT 7
+java
+500 mb free space
+1 GB RAM
+
+  
+
+
+ 

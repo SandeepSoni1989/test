@@ -1,0 +1,388 @@
+linux cammand line.................................................................
+-------------------------------------------------------------------------------------
+1.pwd                                                  shows your present directory
+2.cd/                                                  move you to your root directory i.e nothing 
+                                                       but my computer in windows 
+3.ls                                                   list out the content of directory
+
+ls option file/directory
+
+4.  ls /                                                show containt of root directory
+5.  ls ~                                                show containt of home directory
+6.  ls ..                                               show one step back directory structure
+7.  ls ../..                                            show two step back directry structure
+8.  ls -l                                               list out the containt in long format
+9.  ls -a                                               show the hidden file also
+    ls -s                                               directory or file display with its size
+10. ls -al                                              show hindden file with long formate
+11. ls -lS                                              show the directory long list with shorting 
+                                                        by size
+12. cd /                                                go to the root directory
+13. cd ~                                                go to the home directory
+14. cd ..                                               go to one step back
+15. cd../..                                             go to two step back
+16. cd path                                             go to that location.... 
+                                                        path should be strat from root
+17. cd relative path                                    go to that location with in the location 
+                                                        where you are
+18. cd x\y                                              if the directory name have a space
+19. cd "x y"                                            if the directory name have a space
+20. cd 'x y'                                            if the directory name have a space
+ 
+cat option file name
+
+21.cat                                                  what ever you write its echo it..
+22.cat file                                             dispaly you the contain of file
+23.cat file1 file2                                      display you the combaind cointain of files
+24.cat -b file                                          display you a cointain with the non blank line.
+25.cat -n file                                          display you a cointain with  all the line
+26.cat -s file                                          display you a contain with remove all balnk line 
+                                                        with one blank line
+27.cat -E file                                          display you a contain with add $ at everey end 
+                                                        of line.
+28.cat > file                                           open witha new file name as "file" you can 
+                                                        write on it and save it by +d
+                                                        when you run same cammand for same file..the
+                                                        contain of new one replace
+                                                        the older one.
+29.cat > file                                           that will add with the privious "file" contain
+                                                        instead of replace.
+30.cat file1 >> file2                                   it will add the contain of file2 with the 
+                                                        file1 contain 
+31.cat file1 file2 > file3                              it will create file3 and save the contain 
+                                                        of both the file file1 and file2
+                                                           
+32.cat ls -al > file1                                   it will create file1 and save the result ******cat 
+                                                        of la -al
+33.mkdir dr                                             it will create a new directory name as dr
+34.mkdir dr/image                                       it will create a new sub directory name 
+                                                        image inside dr.
+35 mkdir name/mark                                      its wont work becouse parent directory is 
+                                                        not exist..i
+36.mkdir -p name/mark                                   it will first create the parent directory 
+                                                        that is name
+                                                        and inside that name will gona create.
+37.mkdir -p name/{a,b,c}                                it will first create the parent one i.e 
+                                                        name and inside a b c three 
+                                                        directory will create as child directory 
+                                                        of name.
+
+rmdir -options directory name                           if directory cointains file its will not work.
+
+38.rmdir dr                                             it will remove your directory.
+39.ls -R                                                it will show you directory structure
+40.rmdir a/b/c/d/e                                      it will remove only e directory....here
+                                                        a b c d e are in hirarcy
+41.rmdir -p a/b/c/d/e                                   it will remove all the directory along with 
+                                                        parent directory i.e here a
+42.rmdir -pv a/b/c/d/e                                  it will remove all the directoryalong with 
+                                                        show all the step going in the background
+                                                        due to -v option..
+rm  it will use to delete files and directory.....
+if directory have some contain that will deleted by rm cammand
+
+43.rm dir                                               it will delete dir if its contain file also
+                                                        dir will get deleted
+44.rm -r a/b/c/d/e                                      it will delete all the directory along with 
+                                                        aparent one..in rm cammand we no need
+                                                        to mention all the child name also if we 
+                                                        simply run rm -r a that will also
+                                                        gona delete a directory along with its all 
+                                                        containts.here r stand for recursive.......
+                                  
+cp options source destination                           cammand is use to copy the file...
+
+45.cp file1 file2                                       if file2 not exist than it will create file2 
+                                                        and copy thecontain of file1.
+                                  
+46.cp file1 dir                                         copy the file1 and save to directory dir.
+47.cp file1 file2 dir1                                  file1 and file2 both copy and paest on dir1
+48.cp -i file1 file2 dir                                i for intractive interface...it will ask if file 
+                                                        have maching name..want to repalce.
+                                   
+49.cp dir dir1                                          if dir exist and dont have any contain inside it
+                                                        and dir1 is not exist  this cammand is gonna 
+                                                        create one new directory name as dir1 and paste dir
+                                                        inside it..
+50.cp -R dir dir1                                       by this cammand if dir have some containts containts
+                                                        will paste inside the dir1.if destination directory
+                                                        already exist than when you run cp -R dir dir1 cammand
+                                                        dir with its contains both will paste inside the dir1
+                                                        if not dir1 not exist than only cointain is gona save
+
+mv options source destination                           use to move the cointains
+
+51. mv file1 file2                                      file1 contains move to file2
+52. mv file2 file3                                      if file3 is not exist its create i.e file3and move the
+                                                        contains of file2
+53. mv file1 dir                                        move file1 to dir
+54. mv file1 dir                                        the condition is same name file1 have two file..one is
+                                                        already exist in dir in this case dir 'file1 will
+                                                        replace with new file1.
+55.mv -i file1 dir                                      if file name same it will ask for replacment
+56.mv dir1 dir2                                         the dir1 will move with contains into dir2 if dir2 
+                                                        already exist.if dir2 not exist than first it will
+                                                        create dir2 and move the cointain of dir1 within it.
+                                                        dir1 will desapear.....
+if the file containts really big and you use cat cammand to see the cointains it7 wont show you from begning..
+so in this case we use less cammand...
+
+57.less big.text                                        it will show you the cointains of big file from the
+                                                        begnning..and you can nevigate,space button  goes
+                                                        you page by page downward..
+                                                        B        will goes you upward page by page
+                                                        G        will goes to last of the page
+                                                        1 G      will goes you on the top
+                                                        /book    it will highlight the word top top buttom
+                                                        here book is the word.. just press n for
+                                                        go to next item...
+                                                        ?book    it will highlight the word  buttom to top
+                                                        here book is the word..just press n for go to next
+                                                        item...
+                                                        q        will quite from less cammand
+
+
+more big.text                                            space      1 page down
+                                                         b          1 page up
+                                                         enter      line by line downwards
+                                                         q          out of more
+
+
+
+touch cammand is use to create new empty file....you cant create directory by use of touch...
+
+58.touch file6                                          it will create the file6 file that is empty..
+                                                        if the file is not exist than touch cammand will 
+                                                        create a new empaty file.but if file is already exist
+                                                        and we you touch cammand than the time stamp for
+                                                        that file will get modified..which can be seen by
+                                                        ls -l cammand where all file with its time and date 
+                                                        available....
+
+                                      
+nano is a text editor and also for searching perpose
+
+59.nano file1                                          this will create and open the file name file1...
+                                                       we add our cointaints..in order to save the
+                                                       cointaints press clr + o...than your file will save.
+
+60.nano file1                                          again it will open the file with privious cointans.
+61.nano abc.cpp                                        it will open a file name abc with a c++ formate.
+
+sudo cammand ......  super user do....
+
+62.sudo "any cammand"                                  it will give us a administrative privilage
+63.sudo -s                                             after giving the passward... thats change your mode
+                                                       i.e in super user modo.. now we no need to type sudo
+                                                       infront of any =cammand where admenstrative privilage
+                                                       required.
+64.top                                                 its show all the system runing proceess same like task
+                                                       manager in windows.if you want to chage the refreshing
+                                                       rate than press s it will ask for what second you want.
+                                 
+                                                       when you press i it will felter all the idle processe..
+                                                       only changing processe will shown..
+                                                       press k than it will ask PID that PID will kill..
+        kill flag PID ...........
+65. pidof name of the proceess                         it will give the PID of respected proccess..
+66.kill PID                                            it will kill that PID proccess..
+67.kill -KILL PID                                      it will close the process respected PID this stroger 
+                                                       than simply kill cammand.
+68.kill -9 PID                                         its also kill the proccess ..its also a stronger than
+                                                       normal kill.
+69.ps -ux                                              it will give all running proccess with PID.
+70.ps -aux                                             it will show you proccess of all the user with the pid.
+                                                       -x stand for current user
+                                                       -a for all process
+                                                         
+71.ps -U user name                                     it will give you the proccess for respected user..
+72.ps -C proccess name                                 all the instances will show you for the respected 
+                                                       proccess.
+73.echo hello                                          its will give same echo
+74.chmod o+x file1                                     others add a permssion to execute the file1
+                                                       o stand for others + stands for add the permissions x 
+                                                       stand for exetuble permission.
+                                                       w stand for write
+                                                       r stand for read
+                                                       g stand for group
+                                                       u stand for user
+                                                       + for adding permission
+                                                       - for removing the permission
+75. chmod g+x file1                                    add the permission of execute for the file of file1.
+76. chmod u-w file1                                    remove the ermission of user file for file1                        
+77. chmod u-rwx file1                                  remving the permission of user read write and execute 
+                                                       for file1
+78. chmod ug=rwx file1                                 adding permission read write and execute to user and
+                                                       group for file1.
+79. chmod a-rwx file1                                  removing permission read write execute from user group
+                                                       others.. a stand for all i.e user group and others.
+                                     
+80. chmod u-e,g+r,o-ew file1                           removing execte permission from user
+                                                       adding read permission to group
+                                                       removing execute and write permission for others..
+81.ls -ld dir                                          it will show you the repected directory long format.
+82.chmod u-r dir1                                      removing the read permission to dir1
+   chmod -r permission directory name                  if directory have other cointaints
+ 
+first three letter for user second three for group last three is for other
+each three combine as binary like 111 for rwx so if 7 means all three permission
+                                                    3 means write and execute
+                                                    4 means read 
+same logis is goes on............
+
+83. chmod 000 file                                         means user value is 0 means no permission
+                                                       group value is 0 means no permission
+                                                       other value is 0 means no permission
+84. chmod 157 file                                         means user value is 1 means execute permission
+                                                       group value is 5 means r and execute permission
+                                                       other value is 7 means all three permission
+ 
+85.which ls                                            will give the cammand location where it is present
+                                                       like /base/ls
+86.which chrome                                        will give the location of where the chrome is store
+                                                       in the system
+87.whatis ls                                           gives the short discription..
+ 
+how to  create user....
+
+88.sudo useradd "name of the user" -m -s /bin/bash -g "user group" -c "some comments" G "user define group"                       
+                                                      NOTE:---- -m defaul home directory -s defaul sell
+
+89.sudo passwd "user name" and enter after that type the password for user to add password for particular user..
+
+90.ls/home/                                            will give all availble user
+91.sudo userdel "user name"                            it will delete the account, but it will not delete the 
+                                                       home directory
+                                                       for the user....all the history will remain save.
+92.sudo rm -r /home/"user name"                         it will delete the user name from home directory.
+93.sudo userdel -r "/home/user name"                         it will delete user toatally means from home directory
+                                                       also.
+94.groups                                              shows which are the group current user is connected to
+95.cat/etc/groups                                      shows all the groups in the system
+                                                       means etc/group directory contains all group info.
+96.sudo groupadd "name of group"                       create a group name java...
+97.sudo groupdel "name of group"                       it will delete the group.
+98.sudo gpasswd -a "user name" "group name"            it will add the user to a group, -a stand for adding.
+99.sudo gpasswd -d "user name" "group name"            it will remove the userv from particular group.
+
+.bashrc when ever you open a new terminal session it will executed i.e a script...
+ls -a at home directory you can see the directory .bashrc.
+we use .bashrc to costomize the terminal or enviroment accodingly..
+
+100.nano .bashrc                                       nano and gedit is a editor...it will open 
+                                                       the .bashrc..
+101.gedit .bashrc 
+102.df                                                 it will give you a disk spaces and details..
+103.df -h                                              -h will give homan readable fomate
+104.du                                                 it will give you the space is used.
+105.du -h                                              human readable formate.
+106.du -sh                                             -s for summery
+                                                       -h human readble formate
+107.free                                               used space toatal space shared buffers chached..details
+108.free -b                                            b stand for bit
+         -k                                            k stand for kilobit
+         -m                                            m stand for megabit
+         -g                                            g stand for gb
+109.du -sh "file path"                                 give the details of particular file.
+110.watch "cammand"                                    cammand will executed repetaly by defaulty 2 second
+                                                       crl+c for come out to the cammand
+111. watch -n 1 "cammand"                              cammand will repeate at 1 second interval
+112.watch -n 0,5 "cammand"                             every .5 second
+113.head "file name"                                   it will give first 10 line of the file by default
+114.tail "file name"                                   it will show the last 10 line of file by default.
+115.head -n 3 "file name"                              it will show the first 3 line.
+116.tail -n 3 "file name"                              it will show the last 3 line
+we can avoid -n also it works...
+117.tail -f "file name"                                -f stand for follow it will show the last 10 line but
+                                                       it will not come out 
+                                                       its watching if file changing the cointaints resuls keep
+\                                                      on change.
+118.head "file name1" "file name2"                     its will print both the file 10  10 lines
+119.find "directory"  -name "file name"                it will search for the file..and give the location.
+120.find "directory" -name "file name.*"               it will search for all the possible extention or anything with the name
+121.find "directory" -name "file *.txt"                it will search for all the possible file whos extention is .txt.
+122. find "directory" -mtime -"number of days"         - for days back ,it will search the file which is create days back what we enter.
+                                                       means if we dont remember the name of the file or location only by knowing
+                                                       how many days before it was created we can search it.
+123.wc "file name"                                     its give number of line , number of word , number character 
+124.wc -c "file name"                                  its give only number of character
+125.wc -l "file name"                                  its give only number of line
+125.wc -w "file name"                                  its give only number of words
+126.wc -L "file name"                                  its give only number of charecter of longest line.
+127.cal                                                its give the calander
+128.ncal                                               formate change
+129.cal "year"                                         it will all the month of that year..
+130.cal 2 2018                                         it will show the feb of 2018
+131.cal -3                                             crrent privioyus and next month calander
+132.date                                               display date and time
+sequnces matter for the below cammand...
+133.date -s "11/20/2003 12:48:00"                      it will change the date and time , -s stand for set.
+134.cammand1 ; cammand2                                both cammand will execute...
+135.cammand1;cammand2;cammand3                         all three cammand execute..
+                                                       any cammand will fail will not affect the others.
+136.cammand1&&cammand2&&cammand3                       all the cammand will executed..whens cammnd fail occure it
+                                                       will not execute the next cammand
+137.cammand1||cammand2                                 if cammand1 will execute than cammand2 will not execute
+                                                       if cammand1 not execute than only cammand2 execute its works like
+                                                       OR operation..
+ sudo apt-get update                                   resequnice yr system package..update all packages
+ sudo apt-get install "package name"
+ sudo apt-get remove "package name"
+ sudo apt-get remove --purge "package name"            remove the package alonge with all the configuring file
+ sudo apt-get autoremove                               remove the package which is no longer use by any package
+ yum(centos or redhat)
+ dnf(centos or redhat)
+138.nano /etc/apt/sources.list                         display the list of repositry i.e available packeges on yr os
+139.ifconfig                                           display ip and network information.
+140.ifconfig eth0                                      it will display about eth0 same we can do for eth1 like..
+                                                       if we have more than one eth connection.
+141.ifconfig eth0 up/down                              it will up or down your internet connection..
+
+for compress any folder
+142.tar -cvf "name of tar file" "file name which is gona compress"             
+                                                       c stand for create
+                                                       v stand for vervose means it will show the progress
+                                                       f stand for give your file name which will in compree format
+for uncompress the folder
+143.tar -xvf "tar file name" "name of uncompress file name"                    
+                                                       x stand for extract
+                                                       v stand for vervose means it will show the progress
+                                                       f stand for give your file name which will in compree format
+144.tar -cvfz file.tar.gz test                         for the tar.gz format
+145.tar -xvfz file.tar.gz test                                  
+
+grep cammand is case sensitive by default
+146.grep "options" file.txt                            it will search the key word option in file file.txt
+147.grep -i "option" file.txt                          it will search for all option thats case insensitivly
+148.grep -n "option" file.txt                          it will come with line number
+149.grep -n "some just" file.txt                       it will loock for "some just" sentance
+150.grep -n "pattern" file1.txt file2.txt file3.txt    it will search for all the file..
+151.grep -n "pattern" *                                it will search in the present directory
+152.grep -v "pattern" file1                            it show the line doesnt contain the pattern
+153.grep --help
+    grep -rl "string" path                             to serch string in any directory or path..it will serch each place respective path
+
+netstat stand for netwirk statictis
+
+154.netstat -a                                          it will show all the connection tcp/udp/unix means all display
+155.netstat -a|less                                     it will show in the good manner
+                                                        press q to quit
+156.netstat -at|less                                    it will show you only tcp connection
+157.netstat -au|less                                    it will show you only udp connection
+158.netstat -l|less                                     it will show only leasning connection
+159.netstat -lt|less                                    it will display tcp leasning
+160.netstat -lu|less                                    it will display upp leasning
+161.netstat -s|less                                     show the statictis
+162.netstat -st|less                                    statics of tcp
+163.netstat -su|less                                    statixs of udp
+164.netstat -pt|less                                    pid related to tcp
+165.netstat -p|less                                     pid with programming name
+166.netstat -n|less                                     numerical port
+167.netstat -c                                          continuasly show the network ststics
+168.netstat -ie                                         same output as ifconfig
+                                                        -i stand for interface
+                                                        -e stand for extanded
+169.netstat -an| grep ':80'                                                        
+
+| means what ever the left side output behalf of that right hand side cammand will work....
+

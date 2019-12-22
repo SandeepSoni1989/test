@@ -1,0 +1,78 @@
+domain controller is the central point from which the domain is controlled. It ensures that each server is configured according to the management policy of the domain. The domain controller is also a host controller.
+
+A host controller is a physical or virtual host that interacts with the domain controller to control the lifecycle of the application server instances running on its host and to assist the domain controller to manage them. Each host can contain multiple server groups.
+
+A process controller is a small, lightweight process that is responsible for spawning the host controller process and monitoring its lifecycle. If the host controller crashes, the process controller will restart it. It also starts server processes as directed by the host controller; however, it will not automatically restart server processes that crash.
+
+
+
+
+
+http://middlewaretechadmin.blogspot.com/2015/10/jboss-eap-6-basics.html
+ JBOSS EAP 6 BASICS
+
+
+JBoss EAP 6 provides two operating modes for JBoss EAP 6 instances: standalone server or
+managed domain.
+The two modes differ in how servers are managed, not in their capacity to service end-user requests. It is important to note that the high-availability (HA) cluster functionality is available via either operating mode. A group of standalone servers can be configured to form an HA cluster.
+
+1.About Standalone Servers
+Standalone server mode is an independent process and is analogous to the only running mode available in previous JBoss EAP versions.
+A JBoss EAP 6 instance running as a standalone server is a single instance only but can optionally run in a clustered configuration.
+
+2.  About Managed Domains
+The managed domain operating mode allows for management of multiple JBoss EAP 6 instances from a single control point. Centrally managed JBoss EAP 6 server collections are known as members of a domain. All JBoss EAP 6 instances in a domain share a common management policy.
+
+A domain consists of one domain controller, one or more host controller(s), and zero or more server groups per host.
+
+A domain controller is the central point from which the domain is controlled. It ensures that each server is configured according to the management policy of the domain. The domain controller is also a host controller. One host controller instance is configured to act as a domain controller.
+
+By default, the central management policy is stored in the domain/configuration/domain. xml file. This is the main configuration file for a managed domain. Only the domain master reads this file. On other domain members, it can be removed.
+
+The host controller interacts with the domain controller to help manage the communication between the servers and the domain controller and control the lifecycle of the application server instances running on its host and to assist the domain controller to manage them.  
+
+Multiple host controllers of a domain can interact with only a single domain controller. Hence, all the host controllers and server instances running on a single domain mode have a single domain controller and must belong to the same domain.
+
+By default each host controller reads its configuration from the domain/configuration/host.xml file located in the unzipped JBoss EAP 6 installation file on its host's filesystem. The host.xml file contains the following configuration information that is specific to the particular host:
+
+    How the host controller contacts the domain controller to register itself and access the domain configuration.
+    How to find and contact a remote domain controller.
+    That the host controller is to act as the domain controller
+
+
+
+A server group is a set of server instances which have JBoss EAP 6 installed on them and are managed and configured as one. The domain controller manages the configuration of and applications deployed onto server groups. Consequently, each server in a server group shares the same configuration and deployments.
+Each server group needs a unique name and a reference to one profile of the domain configuration
+
+The server instances are independent from the domain controller and started by Process Controller. These are application server instance.
+
+Every server instance(Application servers) of a domain belongs to a virtual server group. The idea is, that all servers of the same server group, perform the same tasks. When you deploy an application you will not deploy it to a server, you will deploy it to a whole server group. It is also possible to mange different server groups in one domain, e.g. production, staging or a test sever group.
+
+The controller and the server instances of each host are separate JVM processes, which will be monitored by a process controller. The process controller is also a separate JVM process that is responsible for spawning the other processes and monitoring their lifecycle. If, the host controller process crashed, the process controller will start up the host controller (If you kill host controller, process control will start it again.) and each server that is configured with the auto-start parameter. However, if the server process of a server instance is terminated unexpectedly, the process controller will not restart the server instance automatically.
+
+
+If the domain controller crashes, the host controller and server instances will be still available. Only the management and configuration of the server is not possible at this time. The host controller tried in a certain interval a re-connect. After the domain controller is available, the host controller establishes a new connection.
+
+What happens when a JBoss server starts in domain mode?
+
+JBoss goes through a few steps to load the right configuration. There are three components at work:
+
+1. process controller,
+2. host controller
+3. domain controller.
+
+The process controller is responsible for starting other processes and monitoring them. The host controller is responsible for managing configuration on the physical host and making sure the correct server instances are started by the process controller and the domain controller is responsible for holding the domain configuration.
+
+When JBoss is started in domain mode, by calling either domain.bat or domain.sh, the following steps are performed:
+
+1. The Process Controller (PC) is started in its own JVM(separate process)
+2. The PC starts the Host Controller (HC) in a separate JVM
+3. The HC parses the host.xml to see if this host is the Domain Controller (DC)
+
+If this host is the DC:
+            The local domain.xml and local host.xml settings are combined to make a single configuration for the machine.
+
+If this host is not the DC:
+            The HC tries to connect to the DC and combines the remote domain.xml with the local host.xml to make a single configuration for the machine.
+
+4.Each server instance defined in the host.xml (if any) is started in its own JVM.

@@ -1,0 +1,59 @@
+Unable to Access Tomcat Manager 6, 7, 8 and 9
+
+Netsparker Web Application Security Scanner – the only solution that delivers automatic verification of vulnerabilities with Proof-Based Scanning™.
+
+by Chandan Kumar | April 22, 2018 | Application Server
+
+Necessary configuration to log in to Tomcat Manager
+
+Tomcat manager is essential for administrative tasks. However, by default, it’s not functional.
+
+There are few things you must do for tomcat manager to work.
+
+Let’s see how…
+
+As a best practice – take a backup of configuration file before modification so you can roll-back when something goes wrong.
+Tomcat 6.x/7.x
+
+    Login to Tomcat server
+    Go to installation directory and then conf folder
+    Open the tomcat-users.xml and add the following above </tomcat-users> syntax
+
+<role rolename="manager-gui"/>
+<user username="tomcat" password="tomcat" roles="manager-gui"/>
+
+Note: change the password from tomcat to something complex.
+
+    Restart Tomcat and try to log in
+
+It should be successful.
+Tomcat 8.x/9.x
+
+By default, Tomcat 8 manager is configured to be accessed from the same server where it’s installed. If you access manager, you will get 403 error.
+
+For a manager to be accessible from any host/IP, you need to do the following.
+
+    Go to Tomcat installation and then webapps/manager/META-INF
+    Open context.xml and comment Valve section as below
+
+<Context antiResourceLocking="false" privileged="true" >
+<!--
+  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />
+-->
+  <Manager sessionAttributeValueClassNameFilter="java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap"/>
+</Context>
+
+Ex:
+
+    Save the file
+    Next, go to conf folder and open tomcat-users.xml to adding the following above </tomcat-users> syntax
+
+<role rolename="manager-gui"/>
+<user username="tomcat" password="tomcat" roles="manager-gui"/>
+
+    Save the configuration file and restart the Tomcat
+
+Login should be ok now. I hope this helps.
+
+If you are new to Apache Tomcat or interested in learning more about administration, then I would recommend this online course.

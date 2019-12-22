@@ -1,0 +1,2 @@
+admin srver defaul is non stage ..means its run the application from where its deploy means loacally..
+but manage server we can choess it..if we go with stage mode..each server have a stage dir where app will save.

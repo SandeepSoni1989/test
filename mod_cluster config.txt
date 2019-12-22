@@ -1,0 +1,85 @@
+for making multiple instance of mod_cluster simply in httpd conf file we have to define to vertual host for 
+mod_cluster_manager..
+As you can see, we are using two httpd servers working as load balancers in this clustering environment, which are "fedora" and "fedora2". Here are the mod_cluster settings in the httpd servers of these two machines. First is "fedora":
+LoadModule slotmem_module modules/mod_slotmem.so
+LoadModule manager_module modules/mod_manager.so
+LoadModule proxy_cluster_module modules/mod_proxy_cluster.so
+LoadModule advertise_module modules/mod_advertise.so
+ 
+<VirtualHost 10.0.1.44:80>
+  <Directory />
+    Order deny,allow
+    Deny from all
+    Allow from 10.0.1
+  </Directory>
+  <Location /mc>
+    SetHandler mod_cluster-manager
+    Order deny,allow
+    Deny from all
+    Allow from 10.0.1
+  </Location>
+</VirtualHost>
+<VirtualHost 10.0.1.44:6666>
+  <Directory />
+    Order deny,allow
+    Deny from all
+    Allow from 10.0.1
+  </Directory>
+  ServerAdvertise on
+  EnableMCPMReceive
+</VirtualHost>
+
+Then it's "fedora2":
+LoadModule slotmem_module modules/mod_slotmem.so
+LoadModule manager_module modules/mod_manager.so
+LoadModule proxy_cluster_module modules/mod_proxy_cluster.so
+LoadModule advertise_module modules/mod_advertise.so
+ 
+<VirtualHost 10.0.1.45:80>
+  <Directory />
+    Order deny,allow
+    Deny from all
+    Allow from 10.0.1
+  </Directory>
+  <Location /mc>
+    SetHandler mod_cluster-manager
+    Order deny,allow
+    Deny from all
+    Allow from 10.0.1
+  </Location>
+</VirtualHost>
+<VirtualHost 10.0.1.45:6666>
+  <Directory />
+    Order deny,allow
+    Deny from all
+    Allow from 10.0.1
+  </Directory>
+  ServerAdvertise on
+  EnableMCPMReceive
+</VirtualHost>
+
+After I've started these two httpd servers, and then monitor the messages in advertising channel on one of the EAP6 server machine, I can see the following messages:
+received from /10.0.1.44:23364
+received: HTTP/1.0 200 OK
+Date: Sun, 15 Dec 2013 16:45:04 GMT
+Sequence: 31
+Digest: 74567fc168f13e7472231075ccec759c
+Server: 1eed89c2-0065-4d1e-9693-98509629b234
+X-Manager-Address: 10.0.1.44:6666
+X-Manager-Url: /1eed89c2-0065-4d1e-9693-98509629b234
+X-Manager-Protocol: http
+X-Manager-Host: fedora
+ 
+ 
+received from /10.0.1.45:23364
+received: HTTP/1.0 200 OK
+Date: Sun, 15 Dec 2013 18:31:12 GMT
+Sequence: 456
+Digest: d113d2f9f6223de98b36ea029f27d7e7
+Server: 23116944-28da-419b-bacb-2c78ceefe783
+X-Manager-Address: 10.0.1.45:6666
+X-Manager-Url: /23116944-28da-419b-bacb-2c78ceefe783
+X-Manager-Protocol: http
+X-Manager-Host: fedora2
+
+We can see two httpd servers from the above messages in advertising channel. So these two servers are visible to the two EAP6 servers, because they have subscribed into the default multicast group, and these two EAP6 servers will register themselves to both of these two httpd servers.

@@ -1,0 +1,25 @@
+<ifModule manager_module>                              mod_manager               mod_manager.so   
+Listen 192.168.72.154:10001                            mod_proxy_channel         mod_proxy_cluster.so
+ManagerBalancerName cluster1                           Advertizer                mod_advertise.so
+<virtualHost 192.168.72.154>                                                     mod_cluster_slotmen.so
+<Location/>
+Require ip 192.168.72.154
+</Location>
+ServerAdvertise ON
+Enable MCPMReciver
+<Location/ mod_cluster_manager>
+setHandler mod_cluster_manager
+Order Deny,allow
+Deny from all
+Allow from all
+Require ip 192.168.72.154
+</Location>
+</VirtualHost>
+<IfModule>
+
+
+mod jk
+---------------------------------------------
+LoadModule jk_module modules/mod_jk.so
+Include conf/mod-jk.conf
+

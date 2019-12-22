@@ -1,0 +1,46 @@
+#!/bin/bash
+JBOSS_HOME=/u03/local/opt/jboss-eap-6.2
+DC=192.168.1.12
+DC_port=9999
+
+#---------------------
+#application deployment.....
+#---------------------
+
+deploy()
+{
+echo -e  "\nPlease enter the \"EAR\" or \"WAR\" with obsolete path !!!"
+read EAR
+echo -e  "\nPlease enter the \"server_group\" !!!"
+read server_group
+
+$JBOSS_HOME/bin/jboss-cli.sh --connect --controller=$DC:$DC_port --command="deploy "$EAR" --server-groups="$server_group 2>&1
+echo -e "\n "$EAR " has deployed suucessupply on "$server_group
+}
+#
+---------------------
+#application undeployment.....
+#---------------------
+undeploy()
+{
+echo -e  "\nPlease enter the \"EAR\" or \"WAR\"  !!!"
+read EAR
+echo -e  "\nPlease enter the \"server_group\" !!!"
+read server_group
+$JBOSS_HOME/bin/jboss-cli.sh --connect --controller=$DC:$DC_port --command="undeploy "$EAR" --server-groups="$server_group 2>&1
+
+echo -e "\n "$EAR "has undeployed suucessupply from "$server_group
+}
+
+echo -e "please enter one of the option from deploy/undeploy"
+read operation
+if [[ $operation == "deploy" ]];
+then
+deploy
+elif [[ $operation  == "undeploy" ]];
+then
+undeploy
+else
+echo -e "\n\n Thank You!!! Bye!!!\n\n"
+exit 0;
+fi;

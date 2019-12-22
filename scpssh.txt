@@ -1,0 +1,44 @@
+scp [Options] [[User@]From_Host:]Source_File [[User@]To_Host:][Destination_File]
+
+You can use the scp command just like the cp command to copy files from one directory to another directory
+scp Unix-storage.dat /var/tmp/
+
+2. Copy file from local host to remote serve
+scp filename user@remotehost:/remote/directory/
+
+3. Copy files from remote host to local server.
+scp user@remotehost:/usr/backup/oracle_backup.dat .
+
+4. Copying files between two remote servers
+scp source_user@source_remote_host:/usr/bin/mysql_backup.sh target_user@target_remote_host:/var/tmp/
+
+5. Copying a directory.
+scp -r directory user@remotehost:/var/tmp/
+
+6. Improving performance of scp command
+By default the scp command uses the Triple-DES cipher/AES-128 to encrypt the data. 
+Using the blowfish or arcfour encryption will improve the performance of the scp command.
+scp -c blowfish filename  user@remoteserver:/var/
+scp -c arcfour  localfile user@remoteserver:/var/
+
+7. Limit bandwidth
+
+You can limit the bandwidth used by the scp command using the -l option.
+scp -l bandwidth_limit filename user@hostname:/usr/backup/
+Here bandwidth_limit is numeric to be specified in kilobits per second.
+
+
+ssh-keygen
+ssh -i "location of key" remoteusername@ip
+ssh sample.ssh.com
+ssh alternative-username@sample.ssh.com
+ssh -l alternative-username sample.ssh.com
+ssh hostname command
+
+eg
+ssh sample.ssh.com  ls /tmp/doc
+
+8. Specifying the port number
+
+We can make the scp command to copy the files over a specified port number using the -P option
+scp -P 6001 storage_backup.bat username@hostname:/tmp/

@@ -1,0 +1,8 @@
+fr8.vpnbook.com
+uname -r
+uname -m and arch
+
+1.zip –d abc.zip file.txt     to delete file from zip ..
+2.unzip abc.zip -d "location where unzip"
+3.less abc.zip to see cointan of zip without extract..
+4.zip -u abc.zip filename5     upadte the zip file with filename5

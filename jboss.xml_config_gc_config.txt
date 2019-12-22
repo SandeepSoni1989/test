@@ -1,0 +1,239 @@
+domain.xml contains..
+1.profile
+  a)thread count
+  b)datasource
+  c)log properties
+2.Interface
+  public,private,unsecure
+3.socket binding groups
+  for each profile with binding details like ajp,http,https,jgroup.....
+4.server group
+  a)heap size of each group
+  b)JVM name
+  c)group name
+  d)deployment
+   
+host.XML
+1.management-->security-->managementRelm $ App Relm
+a)ssl
+2.domain controller
+3.interface
+a)management
+b)public
+c)unsecure
+4.JVM
+a)metaspace
+5.server
+a)heap size
+b)port offset
+c)gc log
+6.profile (but containt not getting)
+
+
+host-master.xml
+1.management-->security-->managementRelm $ App Relm
+a)ssl
+2.domain controller
+3.interface
+a)management
+b)public
+c)unsecure
+4.JVM
+a)metaspace
+5.server not by default present in this config
+6.profile (but containt not getting)
+
+host-slave.xml
+1.management-->security
+  security value
+management-->security-->managementRelm $ App Relm
+a)ssl
+2.domain controller
+3.interface
+a)management
+b)public
+c)unsecure
+4.JVM
+a)metaspace
+5.server
+a)heap size
+b)port offset
+6.profile (but containt not getting)
+
+
+
+standalone-full-ha.xml
+
+1.management-->security-->managementRelm $ App Relm
+a)ssl
+2.datasource
+3.deployment sccaner
+4.<subsystem xmlns="urn:jboss:domain:batch-jberet:2.0">
+  a)thread pool
+5.ejb
+  a)thead pool
+6.openjdk
+7.jca
+  a)thead pool
+8.jgroup
+9.modcluster 3.0
+10.underow
+11.<subsystem xmlns="urn:jboss:domain:webservices:2.0">
+12.socket binding group
+
+
+------------------------------------------------------------------------
+JBOSS
+------------------------------------------------------------------------
+Default Log File for a Standalone Server
+ 
+Log File	                                                         Description
+
+EAP_HOME/standalone/log/server.log                     Contains server log messages, including server startup                                                                                                           me0ssages.
+	
+
+EAP_HOME/standalone/log/gc.log.DIGIT.current           Contains garbage collection details.
+	
+
+
+Default Log Files for a Managed Domain
+
+
+Log File	                                                       Description
+
+EAP_HOME/domain/log/host-controller.log                 Contains log messages related to the startup of the                                                                                                               host controlle
+	
+
+EAP_HOME/domain/log/process-controller.log              Contains log messages related to the startup
+                                                                of the process controller.
+	
+EAP_HOME/domain/servers/SERVER_NAME/log/server.log      Contains log messages for the named server, including                                                                                                   server startup messages. 
+
+
+
+to set GC log Properties....
+
+
+ <servers>
+        <server name="rpa2" group="rpa-group" auto-start="true">
+            <jvm name="jvm-rpa">
+                <heap size="64m" max-size="220m"/>
+                <jvm-options>
+                    <option value="-verbose:gc"/>
+                    <option value="-Xloggc:/u03/local/opt/jboss-eap-6.2/mydomain/slave2/servers/rpa2/log/gc.log"/>
+                    <option value="-XX:+PrintGCDateStamps"/>
+                    <option value="-XX:+UseGCLogFileRotation"/>
+                    <option value="-XX:NumberOfGCLogFiles=5"/>
+                    <option value="-XX:GCLogFileSize=3M"/>
+                    <option value="-XX:+PrintGCDetails"/>
+                    <option value="-XX:-TraceClassUnloading"/>
+                    <option value="-XX:HeapDumpPath=/u03/local/opt/jboss-eap-6.2/mydomain/slave2/servers/rpa2/log"/>
+                    <option value="-XX:+HeapDumpOnOutOfMemoryError"/>
+                    
+                </jvm-options>
+            </jvm>
+            <socket-bindings port-offset="150"/>
+        </server>
+	
+
+
+ How to enable GC logs in JBoss?
+
+To enable GC logs, the below JVM properties will have to be given to the JVM:
+
+-verbose:gc –Xloggc:logFileName
+
+ Additionally if the detailed log of the GC is required, then an additional below properties will have to be passed.
+
+ –XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=3M -XX:-TraceClassUnloading
+
+For a domain server GC logging is not enabled for the Process Controller, Host Controller or the Servers. You will need to enable these yourself through JVM properties on the Domain Controller for the level you want (i.e. Server level, Server Group level, Host level, Domain level)
+
+Enable GC logging at Server level through CLI  
+
+Adding -verbose:gc parameter to specific server instance:
+
+[domain@192.168.1.12:9999 /] /host=slave01/server-config=rpa1/jvm=jvm-rpa:add-jvm-option(jvm-option="-verbose:gc")
+{
+    "outcome" => "success",
+    "result" => undefined,
+    "server-groups" => {"undefined" => {"host" => {"slave01" => {"rpa1" => {"response" => {
+        "outcome" => "success",
+        "response-headers" => {
+            "operation-requires-restart" => true,
+            "process-state" => "restart-required"
+        }
+    }}}}}}
+}
+
+
+Adding -Xloggc:logFileName parameter to specific server instance:
+
+[domain@192.168.1.12:9999 /] /host=slave01/server-config=rpa1/jvm=jvm-rpa:add-jvm-option(jvm-option="-Xloggc:/u03/local/opt/jboss-eap-6.2/mydomain/slave1/servers/rpa1/log/gc.log")
+{
+    "outcome" => "success",
+    "result" => undefined,
+    "server-groups" => {"undefined" => {"host" => {"slave01" => {"rpa1" => {"response" => {
+        "outcome" => "success",
+        "response-headers" => {
+            "operation-requires-restart" => true,
+            "process-state" => "restart-required"
+        }    }}}}}}}
+
+Adding XX:+PrintGCDetails parameter to specific server instance:
+
+[domain@192.168.1.12:9999 /] /host=slave01/server-config=rpa1/jvm=jvm-rpa:add-jvm-option(jvm-option="-XX:+PrintGCDetails")                                              {         
+    "outcome" => "success",
+    "result" => undefined,
+    "server-groups" => {"undefined" => {"host" => {"slave01" => {"rpa1" => {"response" => {
+        "outcome" => "success",
+        "response-headers" => {
+            "operation-requires-restart" => true,
+            "process-state" => "restart-required"
+        }
+    }}}}}}
+}
+
+
+
+If you want to add multiple JVM arguments to server instance at a time,
+The CLI command would be:
+
+/host=slave02/server-config=rpa2/jvm=jvm-rpa:write-attribute(name=jvm-options,value=["-verbose:gc","-Xloggc:/u03/local/opt/jboss-eap-6.2/mydomain/slave2/servers/rpa2/log/gc.log","-XX:+PrintGCDateStamps","-XX:+UseGCLogFileRotation","-XX:NumberOfGCLogFiles=5","-XX:GCLogFileSize=3M","-XX:-TraceClassUnloading","-XX:HeapDumpPath=/u03/local/opt/jboss-eap-6.2/mydomain/slave2/servers/rpa2/log","-XX:+HeapDumpOnOutOfMemoryError","-XX:+PrintGCDetails"])
+Notice: We will have to bounce the application server for the properties to take effect.
+
+Check JVM Settings in host.xml file
+
+<servers>
+        <server name="rpa2" group="rpa-group" auto-start="true">
+            <jvm name="jvm-rpa">
+                <heap size="64m" max-size="220m"/>
+                <jvm-options>
+                    <option value="-verbose:gc"/>
+                    <option value="-Xloggc:/u03/local/opt/jboss-eap-6.2/mydomain/slave2/servers/rpa2/log/gc.log"/>
+                    <option value="-XX:+PrintGCDateStamps"/>
+                    <option value="-XX:+UseGCLogFileRotation"/>
+                    <option value="-XX:NumberOfGCLogFiles=5"/>
+                    <option value="-XX:GCLogFileSize=3M"/>
+                    <option value="-XX:-TraceClassUnloading"/>
+                    <option value="-XX:HeapDumpPath=/u03/local/opt/jboss-eap-6.2/mydomain/slave2/servers/rpa2/log"/>
+                    <option value="-XX:+HeapDumpOnOutOfMemoryError"/>
+                    <option value="-XX:+PrintGCDetails"/>
+                </jvm-options>
+            </jvm>
+            <socket-bindings port-offset="150"/>
+        </server>
+
+Check application server process, either these changes were effected or not. 
+
+
+[jboss@middlewaretech log]$ ps -ef | grep -i rpa2
+
+jboss    13888 13178  0 19:54 pts/1    00:00:20 /usr/java/jdk1.7.0_75/jre/bin/java -D[Server:rpa2] -Xms64m -Xmx220m -verbose:gc -Xloggc:/u03/local/opt/jboss-eap-6.2/mydomain/slave2/servers/rpa2/log/gc.log -XX:+PrintGCDateStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=3M -XX:-TraceClassUnloading -XX:HeapDumpPath=/u03/local/opt/jboss-eap-6.2/mydomain/slave2/servers/rpa2/log -XX:+HeapDumpOnOutOfMemoryError -XX:+PrintGCDetails -D[Host Controller]=true -Djboss.domain.master.address=192.168.1.12 -Djava.awt.headless=true -Djboss.modules.system.pkgs=org.jboss.byteman -Djboss.home.dir=/u03/local/opt/jboss-eap-6.2 -Djava.net.preferIPv4Stack=true -Djboss.domain.base.dir=/u03/local/opt/jboss-eap-6.2/mydomain/slave2/ -Djboss.server.log.dir=/u03/local/opt/jboss-eap-6.2/mydomain/slave2/servers/rpa2/log -Djboss.server.temp.dir=/u03/local/opt/jboss-eap-6.2/mydomain/slave2/servers/rpa2/tmp -Djboss.server.data.dir=/u03/local/opt/jboss-eap-6.2/mydomain/slave2/servers/rpa2/data -Dlogging.configuration=file:/u03/local/opt/jboss-eap-6.2/mydomain/slave2/servers/rpa2/data/logging.properties -jar /u03/local/opt/jboss-eap-6.2/jboss-modules.jar -mp /u03/local/opt/jboss-eap-6.2/modules -jaxpmodule javax.xml.jaxp-provider org.jboss.as.server
+
+The GC logs generating under  /u03/local/opt/jboss-eap-.2/mydomain/slave2/servers/rpa2/log/
+
+The GC logs rotating as below. 
+
+
+

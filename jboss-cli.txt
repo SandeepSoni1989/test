@@ -1,0 +1,96 @@
+|-------------------------------------------------------------------------------------------------|
+|******************************************jboss-cli**********************************************|
+|-------------------------------------------------------------------------------------------------|
+
+jboss-cli.sh
+connect
+or
+jboss-cli --connect --controller=localhost:9990
+
+In offline mode also you can do some activites
+
+press tab                                                   -------show all the possiblities
+embed-server                                                -------it will connect to the default standlone.xml
+
+/+tab                                                       ---------show some possiblities.
+/socket-binding-group=standard-sockets/socket-binding=http:write-attribute(name=port,value=8180)
+by using TAB you can take help for possiblities..
+
+stop-embed-server                                           ------come back to normal
+
+embed-server --server-config=standalone-full-ha.xml         -------it will connect standalone-full-ha.xml
+/socket-binding-group=standard-sockets/socket-binding=http:write-attribute(name=port,value=8180)
+stop-embed-server
+
+this all about offline cli
+
+-------------------------------------------------------------------------------------------------------
+
+jboss-cli.bat --connect
+
+no need to give --controller=ip:port
+if u r using local host and 9990
+--------------------------------------
+deploy "path of war file" --name=optional --runtime-name=optional --disable/enable(optional)
+deployment-info
+undeploy + enter   ------give all the deploy app....
+undeploy app name  -------will undeploy the app	
+
+we can do it without inter into jboss-cli mode
+-------------------------------------------------------------------------------
+jboss-cli.bat --connect --controller=ip:port --cammand="deploy "path of war file" --name=optional --runtime-name=optional"
+it will work.
+jboss-cli.bat --connect --controller=ip:port --cammand="undeploy "name of app"
+it will work
+jboss-cli.bat --connect --controller=ip:port --cammand="deployment-info"
+it will work
+---------------------------------------------------------------------------------------------------------------------------
+we can do it to execute cammand inside the file..
+eg suppose we have a file abc whi contain 
+jboss-cli.bat --connect --controller=ip:port --cammand="deploy "path of war file" --name=optional --runtime-name=optional"
+to execute this 
+jboss-cli.bat --connect --controller=ip:port --file="pathe of abc file"
+it will execute
+--------------------------------------------------------------------------------------------------------------------------
+
+jboss-cli.bat
+[standalone@localhost:9990/]:take-snapshot()              -------------------------it will take you config snapshot
+[standalone@localhost:9990/]:list-snapshot()              -------------------------list your all snapshot
+[standalone@localhost:9990/]:shutdown(restart=true)
+
+
+--------------------------------------------------------------------------------------------------------------------------
+domain mode
+-----------------------------------------------------------------------------------------------------------------------------
+jboss-cli.bat --connect
+deploy E:\software\supermarket.war --name=supermarket --runtime-name=supermarket --server-groups=main-server-group
+
+deployment-info --server-groups=server group name
+or
+deployment-info --name=app name
+
+[domain@localhost:9990 /] /host=master/server-config=server-two:stop
+[domain@localhost:9990 /] /host=master/server-config=server-two:start
+[domain@localhost:9990 /] /host=master/server-config=server-two:suspend
+[domain@localhost:9990 /] /host=master/server-config=server-two:restart
+[domain@localhost:9990 /] /host=master/server-config=server-two:resume
+[domain@localhost:9990 /] /host=master/server-config=server-two:manyoption
+
+add a group
+
+[domain@localhost:9990 /] /server-group=mygroup:add(profile=ha,socket-binding-group=ha-sockets,socket-binding-port-offset=200)
+
+to add server
+[domain@localhost:9990 /] /host=master/server-config=server-five:add(group=main-server-group)
+------------------------------------------------------------------------------------------------------------------------------
+make a alias...means give cammand to a name...
+when ever you type that name that particular cammand gona run
+[domain@localhost:9990 /] alias info="deployment-info --name=supermarket"
+[domain@localhost:9990 /] info
+
+to make undo
+[domain@localhost:9990 /] unalias info
+-------------------------------------------------------------------------------------------------------------------------------
+
+	
+	

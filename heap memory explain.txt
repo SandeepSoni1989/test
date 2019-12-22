@@ -1,0 +1,36 @@
+Young generation space: It is meant for recently created objects.
+• Eden space (heap): It is the pool from which memory is initially allocated
+for most objects. It is part a of the young generation.
+• Permanent generation (non-heap): It is the pool that contains all the
+reflective data of the virtual machine itself, such as the class and method
+objects. With Java VMs that use class data sharing, this generation is
+divided into read-only and read-write areas.
+• Old generation space: This stores surviving objects that have lived to
+some extent.
+
+
+Basic Sun JVM arguments
+• -Xms: The initial amount of heap allocated to the JVM
+• -Xmx: The maximum amount of heap that this JVM can allocate
+• -XX:NewSize (default 2 MB): Default size of new generation (in bytes)without reserve
+• -XX:MaxNewSize: Maximum size of new generation (in bytes). Since 1.4,with reserve
+MaxNewSize is computed as a function of NewRatio
+• -XX:NewRatio (default = 2): Ratio of new to old generation sizes
+• -XX:SurvivorRatio (default = 8): Ratio of Eden size to one survivor
+space size
+• -XX:TargetSurvivorRatio (default = 50%): Desired percentage of survivor
+space used after cleaning up
+• -XX:MaxPermSize: Maximum size of the permanent generation
+
+Basic JRockit JVM arguments
+• -Xms: The initial amount of heap allocated to the JVM.
+• -Xmx: The maximum amount of heap that this JVM can allocate.
+-Xns: Size of the nursery generation in the heap. The nursery is an area of the
+heap where new objects are allocated. When the nursery becomes full it is
+garbage collected separately in a young collection.
+• -XgcPrio: A priority level that helps to determine which GC algorithms the
+JVM will use at runtime(This option is also available in Sun JVM from Java 5).
+• throughput: Maximize application throughout.
+• pausetime: Minimize the length of Garbage Collect intervals.
+• deterministic: Consistent response times.
+• -XXcompactRatio: The percentage of the heap.

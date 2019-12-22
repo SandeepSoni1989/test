@@ -1,0 +1,4 @@
+$logout or press ctr+d
+cat > file name after finish press ctr+D
+to check mail type mail
+to send mail to others "mail ashish"

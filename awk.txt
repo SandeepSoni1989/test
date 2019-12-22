@@ -1,0 +1,82 @@
+1.$ awk -F: '{print $1}' /etc/passwd
+2.$ echo "Hello Tom" | awk '{$2="Adam"; print $0}'
+script .......{print $1 " home at " $6}
+3.$ awk -F: -f testfile /etc/passwd
+
+$ awk 'BEGIN {print "The File Contents:"}
+
+{print $0}' myfile
+
+
+$ awk 'BEGIN {print "The File Contents:"}
+
+{print $0}
+
+END {print "File footer"}' myfile
+
+
+
+BEGIN {
+
+print "Users and thier corresponding home"
+
+print " UserName \t HomePath"
+
+print "___________ \t __________"
+
+FS=":"
+
+}
+
+{
+
+print $1 "  \t  " $6
+
+}
+
+END {
+
+print "The end"
+
+}
+
+
+FIELDWIDTHS     Specifies the field width.
+RS              Specifies the record separator.
+FS              Specifies the field separator.
+OFS             Specifies the Output field separator.
+ORS             Specifies the Output record separator.
+
+awk 'BEGIN{FS=":";OFS="--"}{print $1 $6}' /etc/passwd
+
+june2019 --/home/june2019
+apache--/usr/share/httpd
+oracle--/usr/lib/oracle/xe
+wlserver--/home/wlserver
+
+awk 'BEGIN{FS=":";ORS="--"}{print $1 $6}' /etc/passwd
+june2019/home/june2019--apache/usr/share/httpd--oracle/usr/lib/oracle/xe--wlserver/home/wlserver
+
+
+         field1 field2 filed3
+         ------ ------ ------ 
+record *
+       *
+       *
+       *
+
+
+
+The NF variable specifies the last field in the record without knowing its position:
+$ awk 'BEGIN{FS=":"; OFS=":"} {print $1,$NF}' /etc/passwd
+
+
+$ awk '
+
+BEGIN {FS=","}
+
+{print $1,"FNR="FNR,"NR="NR}
+
+END{print "Total",NR,"processed lines"}' myfile myfile
+
+The FNR variable becomes 1 when comes to the second file, but the NR variable keeps its value.
